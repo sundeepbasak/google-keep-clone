@@ -1,7 +1,8 @@
+import { Box } from "@mui/material";
 import React from "react";
 
 const Archive = () => {
-  return <div>Archive</div>;
+  return <Box>Archive</Box>;
 };
 
 export default Archive;

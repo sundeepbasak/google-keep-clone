@@ -1,4 +1,4 @@
-import { Menu, SearchOutlined, LightbulbOutlined, ArchiveOutlined, DeleteForeverOutlined, DeleteOutlineOutlined, GridViewOutlined, ViewAgendaOutlined, EditOutlined, SellOutlined, PaletteOutlined, CloseOutlined, DarkModeOutlined } from '@mui/icons-material';
+import { Menu, SearchOutlined, LightbulbOutlined, ArchiveOutlined, DeleteForeverOutlined, DeleteOutlineOutlined, GridViewOutlined, ViewAgendaOutlined, EditOutlined, SellOutlined, PaletteOutlined, CloseOutlined, DarkModeOutlined, ImageOutlined, DoneAllOutlined, PushPin, PushPinOutlined } from '@mui/icons-material';
 
 export const ICONS = {
     MENU: Menu,
@@ -13,5 +13,9 @@ export const ICONS = {
     TAG: SellOutlined,
     PALETTE: PaletteOutlined,
     CROSS: CloseOutlined,
-    DARK_MODE: DarkModeOutlined
+    DARK_MODE: DarkModeOutlined,
+    IMAGE: ImageOutlined,
+    COMPLETE: DoneAllOutlined,
+    PIN: PushPin,
+    UNPIN: PushPinOutlined
 }

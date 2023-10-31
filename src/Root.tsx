@@ -1,17 +1,12 @@
-import { Outlet } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 import Navbar from "./components/Navbar";
-import Sidebar from "./components/Sidebar";
-import { Box } from "@mui/material";
 
 const Root = () => {
   return (
-    <div>
+    <>
+      <Toaster />
       <Navbar />
-      <Box sx={{ display: "flex" }}>
-        <Sidebar />
-        <Outlet />
-      </Box>
-    </div>
+    </>
   );
 };
 
