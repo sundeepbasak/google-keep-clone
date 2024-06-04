@@ -1,11 +1,12 @@
-import { Box, Button, IconButton, Paper, TextField } from "@mui/material";
+import { ClickAwayListener } from "@mui/base/ClickAwayListener";
+import { Box, IconButton, Paper, TextField } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { useState } from "react";
-import { ICONS } from "../constants/icons.constants";
-import ColorPalette from "./ColorPalette";
-import { INote } from "../pages/Notes";
 import { nanoid } from "nanoid";
+import { useState } from "react";
 import { toast } from "react-hot-toast";
+import { ICONS } from "../constants/icons.constants";
+import { INote } from "../pages/Notes";
+import ColorPalette from "./ColorPalette";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -40,6 +41,7 @@ const AddNote = ({ note, setNote, setAllNotes }: IAddNoteProps) => {
   };
 
   const createNote = () => {
+    setIsClicked(false);
     if (!note.title || !note.text) return;
     setAllNotes((prev) => [...prev, note]);
     toast.success("Note added", {
@@ -60,63 +62,63 @@ const AddNote = ({ note, setNote, setAllNotes }: IAddNoteProps) => {
   };
 
   return (
-    <Paper
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        maxWidth: "600px",
-        margin: "auto",
-        padding: "10px 20px",
-        marginBottom: "40px",
-        background: note.bgColor,
-      }}
-    >
-      {isClicked && (
-        <TextField
-          placeholder="Title"
-          variant="standard"
-          multiline
-          rows={1}
-          maxRows={4}
-          InputProps={{
-            disableUnderline: true,
-          }}
-          name="title"
-          value={note.title}
-          onChange={(e) => handleChange(e)}
-        />
-      )}
-      <TextField
-        placeholder="Take a note"
-        variant="standard"
-        InputProps={{
-          disableUnderline: true,
+    <ClickAwayListener onClickAway={createNote}>
+      <Paper
+        sx={{
+          display: "flex",
+          flexDirection: isClicked ? "column" : "row",
+          justifyContent: "space-between",
+          maxWidth: "600px",
+          margin: "auto",
+          padding: "10px 20px",
+          marginBottom: "40px",
+          background: note.bgColor,
         }}
-        onClick={() => setIsClicked(true)}
-        name="text"
-        value={note.text}
-        onChange={(e) => handleChange(e)}
-      />
-      {isClicked && (
-        <Button variant="contained" size="small" onClick={createNote}>
-          Submit
-        </Button>
-      )}
-      <Box sx={{ display: "flex" }}>
-        <IconButton
-          component="div"
-          sx={{ position: "relative" }}
-          onClick={() => setPaletteClicked((prev) => !prev)}
-        >
-          <ICONS.PALETTE fontSize="small" />
-          {paletteClicked && <ColorPalette setNote={setNote} />}
-        </IconButton>
-        <IconButton component="label">
-          <VisuallyHiddenInput type="file" />
-          <ICONS.IMAGE fontSize="small" />
-        </IconButton>
-      </Box>
-    </Paper>
+      >
+        <Box sx={{ display: "flex", flexDirection: "column" }}>
+          {isClicked && (
+            <TextField
+              placeholder="Title"
+              variant="standard"
+              multiline
+              rows={1}
+              maxRows={4}
+              InputProps={{
+                disableUnderline: true,
+              }}
+              name="title"
+              value={note.title}
+              onChange={(e) => handleChange(e)}
+            />
+          )}
+          <TextField
+            placeholder="Take a note"
+            variant="standard"
+            InputProps={{
+              disableUnderline: true,
+            }}
+            onClick={() => setIsClicked(true)}
+            name="text"
+            value={note.text}
+            onChange={(e) => handleChange(e)}
+          />
+        </Box>
+        <Box sx={{ display: "flex" }}>
+          <IconButton
+            component="div"
+            sx={{ position: "relative" }}
+            onClick={() => setPaletteClicked((prev) => !prev)}
+          >
+            <ICONS.PALETTE fontSize="small" />
+            {paletteClicked && <ColorPalette setNote={setNote} />}
+          </IconButton>
+          <IconButton component="label">
+            <VisuallyHiddenInput type="file" />
+            <ICONS.IMAGE fontSize="small" />
+          </IconButton>
+        </Box>
+      </Paper>
+    </ClickAwayListener>
   );
 };
 

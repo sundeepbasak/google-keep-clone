@@ -2,12 +2,29 @@ import { Box, Card, IconButton, Typography } from "@mui/material";
 import { INote } from "../pages/Notes";
 import { ICONS } from "../constants/icons.constants";
 
-const NoteCard = ({ noteItem }: { noteItem: INote }) => {
+interface INoteCard {
+  noteItem: INote;
+  onPin: (id: string, pinVal: boolean) => void;
+  isActive: boolean;
+}
+
+const NoteCard = ({ noteItem, onPin, isActive }: INoteCard) => {
   return (
-    <Card sx={{ padding: "30px", background: noteItem.bgColor }}>
+    <Card
+      sx={{
+        padding: "10px 30px",
+        background: noteItem.bgColor,
+        opacity: isActive ? 0 : 1,
+      }}
+    >
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
         <Typography variant="h5">{noteItem.title}</Typography>
-        <IconButton>
+        <IconButton
+          onClick={(e) => {
+            e.stopPropagation();
+            onPin(noteItem.id, !noteItem.isPinned);
+          }}
+        >
           {noteItem.isPinned ? <ICONS.PIN /> : <ICONS.UNPIN />}
         </IconButton>
       </Box>
